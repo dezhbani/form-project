@@ -1,26 +1,35 @@
-from datetime import datetime
-from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST,HTTP_403_FORBIDDEN
-from rest_framework.views import APIView
-from .models import OtpRequest
-from rest_framework.authtoken.models import Token
+from django.utils import timezone
+from drf_yasg.openapi import Schema,TYPE_OBJECT,TYPE_STRING
 from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN,HTTP_200_OK
 from rest_framework.throttling import UserRateThrottle
-from .serializers import (
-    request_otp_serializer,
-    request_otp_response_serializer,
-    verify_otp_serializer,
-    verify_otp_response_serializer,
-    )
+from rest_framework.views import APIView
+from drf_yasg.utils import swagger_auto_schema
+from .models import OtpRequest
+from .serializers import (request_otp_response_serializer,
+                          request_otp_serializer,
+                          verify_otp_response_serializer,
+                          verify_otp_serializer)
+
 # Create your views here.
 
-class OncePer2MinuteThrottle(UserRateThrottle):
-    rate = '2/minute'
+class OncePer1MinuteThrottle(UserRateThrottle):
+    rate = '1/minute'
 
 class request_otp(APIView):
 
-    # throttle_classes = [OncePer2MinuteThrottle]
-
+    throttle_classes = [OncePer1MinuteThrottle]
+    @swagger_auto_schema(request_body=Schema(
+        type=TYPE_OBJECT,
+        properties={
+           'phone': Schema(
+              type=TYPE_STRING
+           )
+        }
+    )
+    )
     def post(self,request):
         serializer = request_otp_serializer(data=request.data)
         if serializer.is_valid():
@@ -39,6 +48,21 @@ class request_otp(APIView):
 
 
 class verify_otp(APIView):
+    @swagger_auto_schema(request_body=Schema(
+        type=TYPE_OBJECT,
+        properties={
+           'request_id': Schema(
+              type=TYPE_STRING
+           ),
+           'phone': Schema(
+              type=TYPE_STRING
+           ),
+           'password': Schema(
+              type=TYPE_STRING
+           )
+        }
+    )
+    )
     def post(self,request):
         serializer=verify_otp_serializer(data=request.data)
         if serializer.is_valid():
@@ -46,7 +70,7 @@ class verify_otp(APIView):
                 request_id=serializer.validated_data['request_id'],
                 phone=serializer.validated_data['phone'],
                 password=serializer.validated_data['password'],
-                valid_until__gte = datetime.now(),
+                valid_until__gte=timezone.now()
                 )
             if query.exists():
                 User=get_user_model()
@@ -54,18 +78,16 @@ class verify_otp(APIView):
                 if userq.exists():
                     user=userq.first()
                     token,created=Token.objects.get_or_create(user=user)
-                    return Response(data=verify_otp_response_serializer(data={'token':token,'new_user':False}).data)
+                    return Response(data=verify_otp_response_serializer({'token':token,'new_user':False}).data)
 
                 else:
                     user=User.objects.create(username=serializer.validated_data['phone'])
                     token,created=Token.objects.get_or_create(user=user)
-                    return Response(data=verify_otp_response_serializer(data={'token':token,'new_user':True}).data)
+                    return Response(data=verify_otp_response_serializer({'token':token,'new_user':True}).data)
                     
             else:
-                print("inja1")
                 return Response(None,status=HTTP_403_FORBIDDEN)
 
         else:
-            print("inja2")
 
             return Response(serializer.errors,status=HTTP_400_BAD_REQUEST)
