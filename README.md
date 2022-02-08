@@ -22,5 +22,5 @@ $ python manage.py runserver
 
 ## api url
 
-127.0.0.1:8000/otp/request/
+127.0.0.1:8000/otp/request/ <br />
 127.0.0.1:8000/otp/verify/
