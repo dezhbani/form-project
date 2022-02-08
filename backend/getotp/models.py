@@ -38,3 +38,7 @@ class OtpRequest(models.Model):
     class Meta:
         verbose_name=_("one time password")
         verbose_name_plural=_("one time passwords")
+
+
+    def __str__(self) -> str:
+        return f"{self.request_id}"
