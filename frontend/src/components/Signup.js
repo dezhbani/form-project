@@ -10,7 +10,7 @@ const Signup = ({state, setState}) => {
     const navigate = useNavigate();
     const [data, setData] = useState({phone: ""});
 
-    // console.log(/\D/.test("0245ff"));
+    // console.log(/\D/.test("0245@#$%^&*)"));
 
     const clicked = async () =>{
         const res = await axios.post("http://127.0.0.1:8000/otp/request/",{
