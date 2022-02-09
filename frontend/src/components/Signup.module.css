@@ -17,7 +17,6 @@
 }
 
 .phone{
-    outline: none;
     width: 200px;
     height: 30px;
     border-radius: 5px;
@@ -25,6 +24,23 @@
     border: 1px solid silver;
     transition: all 0.2s ease-in;
 }
+
+  .uncompleted {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0px 10px;
+    border: 1px solid red;
+    transition: all 0.2s ease-in;
+  }
+  
+  .phone:focus,
+  .uncompleted:focus {
+    outline: none;
+    line-height: 30px;
+    height: 30px;
+    border: 1px solid #1a73e8;
+  }
 
 .formfield{
     display: flex;
