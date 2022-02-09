@@ -9,7 +9,7 @@ import Signup from './components/Signup';
 
 function App() {
 
-  const [state, setState] = useState({});
+  const [state, setState] = useState({id: "", phone:""});
 
   return (
     <div>
