@@ -12,7 +12,7 @@ from .serializers import (request_otp_response_serializer,
                           request_otp_serializer,
                           verify_otp_response_serializer,
                           verify_otp_serializer)
-
+from .sendsms import send_message
 # Create your views here.
 
 class OncePer1MinuteThrottle(UserRateThrottle):
@@ -36,10 +36,16 @@ class request_otp(APIView):
             otp = OtpRequest()
             otp.phone = serializer.validated_data['phone']
             otp.generate_password()
-            otp.save()
 
             #send sms
-
+            try:
+                receipt_id = send_message(otp.phone,{"code":otp.password})
+                
+                if receipt_id:
+                    otp.receipt_id = receipt_id
+            except:
+                pass
+            otp.save()
 
             return Response(request_otp_response_serializer(otp).data)
         else:

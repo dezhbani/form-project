@@ -2,6 +2,10 @@
 
 form to sign up and login with phone number
 
+## before run
+
+change .env-sample to .env and set your sms api-key
+
 # run backend
 
 ```
