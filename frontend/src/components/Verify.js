@@ -14,11 +14,9 @@ const Verify = ({state}) => {
     const [erorrs, setErorrs] = useState({});
     const [touched, setTouched] = useState({});
 
-    console.log(Object.keys(erorrs).length);
 
     useEffect(() =>{
         setErorrs(validate(data, "verify"));
-        console.log(erorrs)
     }, [data, touched]);
 
     const focus = () =>{
@@ -37,11 +35,9 @@ const Verify = ({state}) => {
                 phone: state.phone,
                 password: data.code1
             });
-            console.log(res.data.new_user);
             if(res.data.new_user){
                 notify("success", "ثبت نامت تکمیل شد")
             }else{ 
-                console.log(res);
                 notify("success", "خوش آمدی");
         }
         }else{

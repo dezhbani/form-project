@@ -16,7 +16,6 @@ const Signup = ({state, setState}) => {
     const [erorrs, setErorrs] = useState({});
     const [touched, setTouched] = useState({});
 
-    console.log(Object.keys(erorrs).length);
 
     useEffect(() =>{
         setErorrs(validate(data, "signup"));
@@ -36,8 +35,6 @@ const Signup = ({state, setState}) => {
                 phone: data.phone
             });
             setState({id: res.data.request_id, phone: data.phone});
-            console.log(res);
-            console.log(state);
     
             if(res.status === 200){
                 notify("success", "کد تایید ارسال شد")

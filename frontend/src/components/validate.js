@@ -12,7 +12,6 @@ if(type === "signup")
 
     if(type === "verify"){
         if(data.code1?.length < 4){
-            // console.log(data.code.length)
             erorrs.code = "کد تایید نمیتونه خالی باشه";
         }else if(/\D/.test(data.code1)){
             erorrs.code = "کد تایید باید فقط اعداد باشه";
