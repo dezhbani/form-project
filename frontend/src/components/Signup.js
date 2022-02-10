@@ -20,13 +20,10 @@ const Signup = ({state, setState}) => {
 
     useEffect(() =>{
         setErorrs(validate(data, "signup"));
-        console.log(erorrs)
     }, [data, touched]);
 
     const focus = event =>{
         setTouched({ ...touched, [event.target.name]: true });
-        // setErorrs(validate(data));
-        // console.log(erorrs);
     }
 
     const change = event =>{
@@ -62,12 +59,11 @@ const Signup = ({state, setState}) => {
     return (
         <div className={style.maincontainer}>
             <div className={style.container}>
-                <h2 className={style.header}>Sign Up</h2>
+                <h2 className={style.header}>ثبت نام</h2>
                 <div className={style.formfield}>
                     <label className={style.label}>شماره تلفن:</label>
                     <input className={(touched.phone && erorrs.phone)? style.uncompleted : style.phone} type="tel" value={data.phone} onFocus={focus} onChange={change} name='phone' placeholder='شماره تلفن' />
                     {erorrs.phone && touched.phone && <span>{erorrs.phone}</span>}
-
                     <div className={style.buttons}>
                         <button onClick={clicked} type="submit">تایید</button>
                     </div>
