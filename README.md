@@ -3,8 +3,16 @@
 form to sign up and login with phone number
 
 ## before run
+download & install node.js
 
 change .env-sample to .env and set your sms api-key
+
+# run frontend
+
+```
+npm i
+npm start
+```
 
 # run backend
 
