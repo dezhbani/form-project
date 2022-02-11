@@ -43,8 +43,8 @@ class request_otp(APIView):
                 
                 if receipt_id:
                     otp.receipt_id = receipt_id
-            except:
-                pass
+            except Exception as e:
+                print(e)
             otp.save()
 
             return Response(request_otp_response_serializer(otp).data)

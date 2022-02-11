@@ -47,12 +47,13 @@ const Verify = ({state}) => {
 
     }
 
+
     return (
         <div className={style.maincontainer}>
             <div className={style.container}>
                 <div className={style.form}>
                     <label className={style.label}>کد تایید:</label>
-                    <input className={(touched.code && erorrs.code)? style.code : style.uncompleted} maxLength="4" onChange={change}  onFocus={focus} name='code1' value={data.code1} type="text" />
+                    <input className={(erorrs.code && touched.code)? style.uncompleted : style.code} maxLength="4" onChange={change}  onFocus={focus} name='code1' value={data.code1} type="text" />
                     {erorrs.code && touched.code && <span>{erorrs.code}</span>}
                     <div className={style.button}>
                         <button type="submit" onClick={send}>send</button>
