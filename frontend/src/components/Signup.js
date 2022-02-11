@@ -59,7 +59,7 @@ const Signup = ({state, setState}) => {
                 <h2 className={style.header}>ثبت نام</h2>
                 <div className={style.formfield}>
                     <label className={style.label}>شماره تلفن:</label>
-                    <input className={(touched.phone && erorrs.phone)? style.uncompleted : style.phone} type="tel" value={data.phone} onFocus={focus} onChange={change} name='phone' placeholder='شماره تلفن' />
+                    <input className={(touched.phone && erorrs.phone)? style.uncompleted : style.phone} type="tel" placeholder="شماره رو با 98 وارد کن" value={data.phone} onFocus={focus} onChange={change} name='phone'  />
                     {erorrs.phone && touched.phone && <span>{erorrs.phone}</span>}
                     <div className={style.buttons}>
                         <button onClick={clicked} type="submit">تایید</button>
