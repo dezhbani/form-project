@@ -10,6 +10,7 @@ change .env-sample to .env and set your sms api-key
 # run frontend
 
 ```
+cd form-project/frontend
 npm i
 npm start
 ```
